@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Надіслати повідомлення</title>
+</head>
+<body>
+  <h1>Мій Telegram Бот</h1>
+  {% if msg %}
+    <p style="color:green;"><strong>{{ msg }}</strong></p>
+  {% endif %}
+  <form id="msgForm">
+    <textarea name="text" placeholder="Введіть повідомлення" required></textarea><br>
+    <button type="submit">Надіслати</button>
+  </form>
+  <script>
+    document.getElementById("msgForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const text = e.target.text.value;
+      const res = await fetch("/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+      window.location.reload(); // оновлення для показу повідомлення
+    });
+  </script>
+</body>
+</html>
