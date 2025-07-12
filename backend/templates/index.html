@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Мій Telegram Бот</title>
+</head>
+<body>
+  <h1>Надіслати повідомлення</h1>
+  <form id="msgForm">
+    <input type="text" name="chat_id" placeholder="Ваш chat_id" required><br>
+    <textarea name="text" placeholder="Введіть повідомлення" required></textarea><br>
+    <button type="submit">Надіслати</button>
+  </form>
+  <script>
+    document.getElementById("msgForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const text = e.target.text.value;
+      const chat_id = e.target.chat_id.value;
+
+      const res = await fetch("/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, chat_id }),
+      });
+
+      const json = await res.json();
+      alert(json.ok ? "Надіслано!" : "Помилка");
+    });
+  </script>
+</body>
+</html>
